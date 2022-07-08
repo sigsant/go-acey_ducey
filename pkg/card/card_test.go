@@ -11,7 +11,7 @@ func TestGetCard(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 
 	i := 0
-	for i <= 10 {
+	for i <= 15 {
 		t.Run(fmt.Sprintf("Lanzada de manos: %d", i), func(t *testing.T) {
 			firstCard, secondCard := ReturnCard()
 
