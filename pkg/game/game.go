@@ -1,10 +1,23 @@
 package game
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/sigsant/acey_ducey/pkg/card"
+)
 
 const (
 	actualMoney = 100
 )
+
+// showCards muestra las dos cartas del dealer antes de que puedas apostar
+func showCards() error {
+	dealerCardOne, dealerCardTwo := card.DealerCards()
+	fmt.Println("\n\tHere are your next two cards: ")
+	fmt.Printf("\t%d", dealerCardOne.Value)
+	fmt.Printf("\n\t%d\n", dealerCardTwo.Value)
+	return nil
+}
 
 func msgBet(hasBet bool, bet int) string {
 	if !hasBet {
@@ -14,4 +27,10 @@ func msgBet(hasBet bool, bet int) string {
 	}
 
 	return fmt.Sprintf("You bet %d", bet)
+}
+
+func StartGame() {
+	showCards()
+	fmt.Println("\n\tWhat is your bet?")
+	return
 }
