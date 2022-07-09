@@ -13,7 +13,13 @@ func getCard() int {
 	return rand.Intn(14) + 1
 }
 
-func ReturnCard() (*Card, *Card) {
+func PlayerCard() *Card {
+	playerCard := &Card{}
+	playerCard.Value = getCard()
+	return playerCard
+}
+
+func DealerCards() (*Card, *Card) {
 	firstCard := &Card{}
 	secondCard := &Card{}
 
