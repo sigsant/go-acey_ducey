@@ -1,7 +1,10 @@
 package game
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/sigsant/acey_ducey/pkg/card"
 )
@@ -9,6 +12,15 @@ import (
 const (
 	actualMoney = 100
 )
+
+func readInput() string {
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, "leyendo desde linea de comandos: ", err)
+	}
+	return scanner.Text()
+}
 
 // showCards muestra las dos cartas del dealer antes de que puedas apostar
 func showCards() error {
@@ -31,6 +43,17 @@ func msgBet(hasBet bool, bet int) string {
 
 func StartGame() {
 	showCards()
-	fmt.Println("\n\tWhat is your bet?")
-	return
+	fmt.Print("\n\tWhat is your bet? ")
+	bet := readInput()
+	betToInt, err := strconv.Atoi(bet)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
+	if betToInt <= 0 {
+		fmt.Println("\n\t", msgBet(false, betToInt))
+	} else {
+		fmt.Println("\n\t", msgBet(true, betToInt))
+	}
 }
