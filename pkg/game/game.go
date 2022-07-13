@@ -2,6 +2,7 @@ package game
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -9,7 +10,7 @@ import (
 	"github.com/sigsant/acey_ducey/pkg/card"
 )
 
-const (
+var (
 	actualMoney = 100
 )
 
@@ -31,6 +32,15 @@ func showCards() error {
 	return nil
 }
 
+func checkActualMoney(bet int) error {
+	if actualMoney-bet < 0 {
+		actualMoney = 0
+		return errors.New("you bet more than your actual money. You have 0 dollars")
+	}
+	actualMoney -= bet
+	return nil
+}
+
 func msgBet(hasBet bool, bet int) string {
 	if !hasBet {
 		return "Chicken"
@@ -38,7 +48,20 @@ func msgBet(hasBet bool, bet int) string {
 		return fmt.Sprintf("You can bet only between 0 and %d", actualMoney)
 	}
 
+	//TESTINGME: Update testing with this message
+	if err := checkActualMoney(bet); err != nil {
+		fmt.Fprintln(os.Stderr, "Error found in your bet: ", err)
+	}
 	return fmt.Sprintf("You bet %d", bet)
+}
+
+// REMEMBERME: checkCondition No integrado
+func checkCondition(cardDealerOne, cardDealerTwo, cardPlayer *card.Card) string {
+	if cardDealerOne.Value > cardPlayer.Value && cardPlayer.Value < cardDealerTwo.Value {
+		return fmt.Sprintf("Congratulations! You have %d dollars", actualMoney)
+	}
+
+	return fmt.Sprintf("Sorry. You lose! you have %d dollars", actualMoney)
 }
 
 func StartGame() {
@@ -46,6 +69,8 @@ func StartGame() {
 	fmt.Printf("\n\tYou have %d dollars\n", actualMoney)
 	fmt.Print("\tWhat is your bet? ")
 	bet := readInput()
+
+	// TODO: La conversion es redundante en esta parte del código. Pasarla a msgBet
 	betToInt, err := strconv.Atoi(bet)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
