@@ -26,8 +26,8 @@ func readInput() string {
 func showCards() error {
 	dealerCardOne, dealerCardTwo := card.DealerCards()
 	fmt.Println("\n\tHere are your next two cards: ")
-	fmt.Printf("\t%d", dealerCardOne.Value)
-	fmt.Printf("\n\t%d\n", dealerCardTwo.Value)
+	fmt.Printf("\t%s", dealerCardOne.Name)
+	fmt.Printf("\n\t%s\n", dealerCardTwo.Name)
 	return nil
 }
 
@@ -43,7 +43,8 @@ func msgBet(hasBet bool, bet int) string {
 
 func StartGame() {
 	showCards()
-	fmt.Print("\n\tWhat is your bet? ")
+	fmt.Printf("\n\tYou have %d dollars\n", actualMoney)
+	fmt.Print("\tWhat is your bet? ")
 	bet := readInput()
 	betToInt, err := strconv.Atoi(bet)
 	if err != nil {
