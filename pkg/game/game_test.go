@@ -5,6 +5,10 @@ import (
 	"testing"
 )
 
+func init() {
+	actualMoney = 100
+}
+
 func TestBetMessage(t *testing.T) {
 	testCases := []struct {
 		hasBet      bool
@@ -27,5 +31,27 @@ func TestBetMessage(t *testing.T) {
 				t.Error(msg)
 			}
 		})
+	}
+}
+
+func TestActualMoney(t *testing.T) {
+	moneyCases := []struct {
+		money         int
+		expectedMoney int
+	}{
+		{20, 80},
+		{10, 70},
+		{40, 30},
+		{50, 0},
+	}
+
+	for _, moneyvalue := range moneyCases {
+		_ = checkActualMoney(moneyvalue.money)
+
+		if actualMoney == moneyvalue.expectedMoney {
+			t.Logf("Actual money is %d", actualMoney)
+		} else {
+			t.Errorf("Expected: %d \t Received: %d", moneyvalue.expectedMoney, actualMoney)
+		}
 	}
 }
