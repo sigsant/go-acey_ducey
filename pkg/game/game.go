@@ -48,7 +48,6 @@ func msgBet(hasBet bool, bet int) string {
 		return fmt.Sprintf("You can bet only between 0 and %d", actualMoney)
 	}
 
-	//TESTINGME: Update testing with this message
 	if err := checkActualMoney(bet); err != nil {
 		fmt.Fprintln(os.Stderr, "Error found in your bet: ", err)
 	}
