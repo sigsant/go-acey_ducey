@@ -5,29 +5,28 @@ import (
 	"testing"
 )
 
-func init() {
+func setuptest(t *testing.T) {
 	actualMoney = 100
 }
 
 func TestBetMessage(t *testing.T) {
 	testCases := []struct {
+		nameTest    string
 		hasBet      bool
 		bet         int
 		expectedMsg string
 	}{
-		{false, 100, "Chicken"},
-		{true, -1, "You can bet only between 0 and 100"},
-		{true, 120, "You can bet only between 0 and 100"},
-		{true, 40, "You bet 40"},
+		{"No bet", false, 100, "Chicken"},
+		{"Bet with negative number", true, -1, "You can bet only between 0 and 100"},
+		{"Bet with 120 dollars", true, 120, "You can bet only between 0 and 100"},
+		{"Normal bet", true, 40, "You bet 40"},
 	}
 
 	for _, val := range testCases {
-		t.Run(fmt.Sprintf("Apuesta %t realizada con %d", val.hasBet, val.bet), func(t *testing.T) {
+		t.Run(fmt.Sprintf(val.nameTest), func(t *testing.T) {
 			msg := msgBet(val.hasBet, val.bet)
 
-			if msg == val.expectedMsg {
-				t.Log(val.expectedMsg)
-			} else {
+			if msg != val.expectedMsg {
 				t.Error(msg)
 			}
 		})
@@ -35,6 +34,7 @@ func TestBetMessage(t *testing.T) {
 }
 
 func TestActualMoney(t *testing.T) {
+	setuptest(t)
 	moneyCases := []struct {
 		money         int
 		expectedMoney int
