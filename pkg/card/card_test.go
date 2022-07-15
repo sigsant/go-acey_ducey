@@ -27,23 +27,22 @@ func TestGetCard(t *testing.T) {
 func TestNameCard(t *testing.T) {
 	testCard := Card{}
 	testCases := []struct {
+		nameTest     string
 		value        int
 		expectedName string
 	}{
-		{2, "2"},
-		{11, "Jack"},
-		{5, "5"},
-		{12, "Queen"},
-		{13, "King"},
-		{14, "Ace"},
+		{"Display 2", 2, "2"},
+		{"Display Jack", 11, "Jack"},
+		{"Display 5", 5, "5"},
+		{"Display Queen", 12, "Queen"},
+		{"Display King", 13, "King"},
+		{"Display Ace", 14, "Ace"},
 	}
 	for _, val := range testCases {
-		t.Run(fmt.Sprintf("The card display is %s", val.expectedName), func(t *testing.T) {
+		t.Run(fmt.Sprintf(val.nameTest), func(t *testing.T) {
 			convertFigures(figure(val.value), &testCard)
 
-			if testCard.Name == val.expectedName {
-				t.Logf("The card name is %s", val.expectedName)
-			} else {
+			if testCard.Name != val.expectedName {
 				t.Errorf("Value received %s", testCard.Name)
 			}
 		})
