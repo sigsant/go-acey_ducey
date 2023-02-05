@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// test if the card is between 2 and 14
 func TestGetCard(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 
@@ -24,6 +25,7 @@ func TestGetCard(t *testing.T) {
 	}
 }
 
+// test if the card name is correct
 func TestNameCard(t *testing.T) {
 	testCard := Card{}
 	testCases := []struct {
