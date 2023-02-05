@@ -26,13 +26,14 @@ func getCard() int {
 	return rand.Intn(14) + 1
 }
 
+// PlayerCard returns a card for the player
 func PlayerCard() *Card {
 	playerCard := &Card{}
 	playerCard.Value = getCard()
 	return playerCard
 }
 
-// Dealercards devuelve las dos primeras cartas del dealer
+// DealerCards returns the first two cards of the dealer
 func DealerCards() (*Card, *Card) {
 	firstCard := &Card{}
 	secondCard := &Card{}
@@ -54,7 +55,7 @@ func DealerCards() (*Card, *Card) {
 	return firstCard, secondCard
 }
 
-// convertFigures añade el nombre de la figura a la carta segun el numero generado
+// convertFigures adds the name of the figure to the card according to the generated number
 func convertFigures(f figure, c *Card) {
 	switch f {
 	case jack:
@@ -70,8 +71,8 @@ func convertFigures(f figure, c *Card) {
 	}
 }
 
-// ToString convierte el struc en un JSON para su fácil lectura
-// Empleado para testing
+// ToString converts the struct into a JSON for easy reading
+// It is used for debugging
 func (c *Card) ToString() string {
 	output, err := json.Marshal(c)
 	if err != nil {
