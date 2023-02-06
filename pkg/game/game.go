@@ -75,6 +75,18 @@ func checkCondition(cardDealerOne, cardDealerTwo, cardPlayer *card.Card) string 
 	return fmt.Sprintf("\tSorry. You lose! you have %d dollars", actualMoney)
 }
 
+// ReplayGame asks if you want to play again
+func ReplayGame() {
+	fmt.Print("\tDo you want to play again? (y/n): ")
+	replay := readInput()
+	if replay == "y" {
+		actualMoney = 100
+		StartGame()
+	} else {
+		fmt.Println("\tGame over!")
+	}
+}
+
 // StartGame starts the game
 func StartGame() {
 	for actualMoney > 0 {
@@ -104,5 +116,10 @@ func StartGame() {
 
 		// check if the player's card is between the dealer's cards
 		fmt.Println(checkCondition(dealerCardOne, dealerCardTwo, playerCard))
+	}
+
+	if actualMoney == 0 {
+		fmt.Println("\tYou have no more money. Game over!")
+		ReplayGame()
 	}
 }
